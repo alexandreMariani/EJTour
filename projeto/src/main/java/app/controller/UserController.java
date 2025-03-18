@@ -1,6 +1,8 @@
 package app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import app.entity.User;
@@ -16,33 +18,69 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "/{id}")
-    public User findById(@PathVariable Long id){
-        return userService.findById(id);
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        try {
+            User user = userService.findById(id);
+            if (user != null) {
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error fetching user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping
-    public List<User> findAll(){
-        return userService.findAll();
+    public ResponseEntity<?> findAll() {
+        try {
+            List<User> users = userService.findAll();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error fetching users: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/search")
-    public List<User> searchUsers(@RequestParam String name) {
-        return userService.getUsersByName(name);  
+    public ResponseEntity<?> searchUsers(@RequestParam String name) {
+        try {
+            List<User> users = userService.getUsersByName(name);
+            if (users.isEmpty()) {
+                return new ResponseEntity<>("No users found with that name", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error searching users: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping
-    public User save(@RequestBody User user){
-        return userService.postMapping(user);
+    public ResponseEntity<?> save(@RequestBody User user) {
+        try {
+            User savedUser = userService.postMapping(user);
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error saving user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable Long id){
-        userService.deleteMapping(id);
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            userService.deleteMapping(id);
+            return new ResponseEntity<>("User deleted successfully", HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error deleting user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping
-    public User edit(@RequestBody User user){
-        return userService.putMapping(user);
+    public ResponseEntity<?> edit(@RequestBody User user) {
+        try {
+            User updatedUser = userService.putMapping(user);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error updating user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
 }

@@ -23,7 +23,7 @@ public class CommentService {
     @Autowired
     private UserRepository userRepository;
 
-    // Criar um novo comentário
+
     public Comment createComment(Long userId, String content) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -31,7 +31,6 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    // Criar um "like" para um comentário
     public Like likeComment(Long userId, Long commentId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -43,7 +42,6 @@ public class CommentService {
         return likeRepository.save(like);
     }
 
-    // Listar todos os comentários
     public List<Comment> getAllComments() {
         return commentRepository.findAll();
     }

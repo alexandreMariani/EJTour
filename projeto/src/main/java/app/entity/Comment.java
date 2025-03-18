@@ -20,20 +20,21 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotBlank
-    private String texto;
-
-    @ManyToOne
+    private long id;
+    
+    @NotBlank(message = "O campo nome é obrigatório.")
+    private String name;
+    
+    @NotBlank(message = "O campo depoimento é obrigatório.")
+    private String text;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; 
+    @JsonIgnoreProperties("comments")
+    private User user;
 
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Like> likes = new ArrayList<>(); 
-
-    public Comment(String texto, User user) {
-        this.texto = texto;
+    public Comment(String text, User user) {
+        this.text = text;
         this.user = user;
     }
 }

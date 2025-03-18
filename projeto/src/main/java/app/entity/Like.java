@@ -1,10 +1,8 @@
 package app.entity;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties({"likes", "comments"})
+@Table(name = "likes")
 public class Like {
 
     @Id
@@ -28,11 +28,4 @@ public class Like {
     @JoinColumn(name = "user_id", nullable = false)
     private User user; 
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Like> likes; 
-
-    public Like(Comment comment, User user) {
-        this.comment = comment;
-        this.user = user;
-    }
 }
