@@ -14,7 +14,7 @@
     <name>projeto</name>
     <description>Demo project for Spring Boot</description>
     <url/>
-    <licenses>
+    <licenses> 
         <license/>
     </licenses>
     <developers>
@@ -32,13 +32,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version> <!-- Certifique-se de usar a versão correta -->
-            <scope>provided</scope> <!-- Usar 'provided' já que é fornecido pelo contêiner de servlet -->
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
@@ -54,6 +47,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope> <!-- Usar 'provided' já que é fornecido pelo contêiner de servlet -->
         </dependency>
 
         <dependency>
