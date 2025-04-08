@@ -1,14 +1,13 @@
 package app.repository;
 
-import app.entity.Comment;
-
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import app.entity.Package;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
-    Optional<Comment> findById(long id);
+public interface PackageRepository extends JpaRepository<Package, Long> {
+    List<Package> findById(int id);
+    List<Package> findAll();
 }
