@@ -32,6 +32,20 @@ public class UserController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
+    try {
+        User user = userService.findByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Email ou senha incorretos", HttpStatus.UNAUTHORIZED);
+        }
+    } catch (Exception e) {
+        return new ResponseEntity<>("Erro ao tentar fazer login: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
     @GetMapping
     public ResponseEntity<?> findAll() {
         try {

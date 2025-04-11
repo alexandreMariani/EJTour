@@ -3,19 +3,18 @@ package app.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,10 +22,10 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Validated
-@JsonIgnoreProperties({"comments"})
+@JsonIgnoreProperties({"likes", "tours"}) // Ignora 'likes' e 'tours' na serialização
 public class User {
 
-@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -39,7 +38,7 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @NotBlank(message = "A data de nascimento é obrigatória.")
+    @NotNull(message = "A data de nascimento é obrigatória.")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate birthday;
 
@@ -48,7 +47,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("user")
+    @JsonManagedReference // Apenas o lado gerenciador da relação (User) será serializado
     private Set<Comment> comment = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -61,7 +60,6 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "tour_id")
     )
-    @JsonIgnoreProperties("users")
+    @JsonIgnoreProperties("users") // Evita serializar a lista de 'users' no relacionamento de 'Tour'
     private Set<Tour> tours = new HashSet<>();
 }
-

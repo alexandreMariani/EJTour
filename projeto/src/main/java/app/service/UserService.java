@@ -31,6 +31,14 @@ public class UserService{
         return user.get();
     }
 
+    public User findByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isEmpty()) {
+            throw new RuntimeException("Usuário com esse email não encontrado!");
+        }
+        return user.get();
+    }
+
     public User postMapping(User user) {
         User post = userRepository.save(user);
         return post;

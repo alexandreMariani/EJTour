@@ -9,5 +9,4 @@ import app.entity.Package;
 @Repository
 public interface PackageRepository extends JpaRepository<Package, Long> {
     List<Package> findById(int id);
-    List<Package> findAll();
 }
