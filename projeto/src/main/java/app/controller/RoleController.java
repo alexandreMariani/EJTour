@@ -9,7 +9,11 @@ import app.entity.Role;
 import app.service.RoleService;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(
+  origins = "*",
+  methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS},
+  allowedHeaders = "*"
+)
 @RequestMapping(value = "/role")
 public class RoleController {
 

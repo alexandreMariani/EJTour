@@ -11,7 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/package")
-@CrossOrigin(origins = "*")
+@CrossOrigin(
+  origins = "*",
+  methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS},
+  allowedHeaders = "*"
+)
 public class PackageController {
 
     @Autowired

@@ -11,8 +11,12 @@ import app.service.TourService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(
+  origins = "*",
+  methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS},
+  allowedHeaders = "*"
+)
 @RequestMapping(value = "/tour")
-@CrossOrigin(origins = "*")
 public class TourController {
 
     @Autowired
