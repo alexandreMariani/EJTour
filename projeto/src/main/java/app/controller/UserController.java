@@ -50,16 +50,6 @@ public class UserController {
 
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> searchUsers(@RequestParam String name) {
-
-            List<User> users = userService.getUsersByName(name);
-            if (users.isEmpty()) {
-                return new ResponseEntity<>("No users found with that name", HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(users, HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<?> save(@RequestBody User user) {
 

@@ -25,9 +25,6 @@ public class UserService{
         if (user.isEmpty()) {
             throw new RuntimeException("user não encontrado!");
         }
-        if (user.get().getPassword().isEmpty()) {
-        user.get().setPassword("12345");
-        }
         return user.get();
     }
 
@@ -63,5 +60,7 @@ public class UserService{
         User put = userRepository.save(user);
         return put;
     }
+
+    
 
 }

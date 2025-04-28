@@ -62,4 +62,8 @@ public class User {
     )
     @JsonIgnoreProperties("users") // Evita serializar a lista de 'users' no relacionamento de 'Tour'
     private Set<Tour> tours = new HashSet<>();
+
+    public String getPassword(){
+        return this.password;
+    }
 }
