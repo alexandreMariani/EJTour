@@ -22,7 +22,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Validated
-@JsonIgnoreProperties({"likes", "tours"}) // Ignora 'likes' e 'tours' na serialização
+@JsonIgnoreProperties({"likes", "tours"}) 
 public class User {
 
     @Id

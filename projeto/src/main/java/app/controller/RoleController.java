@@ -22,25 +22,17 @@ public class RoleController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        try {
             Role role = roleService.findById(id);
             if (role != null) {
                 return new ResponseEntity<>(role, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Role not found", HttpStatus.NOT_FOUND);
             }
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error fetching role: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Role department) {
-        try {
             Role savedRole = roleService.postMapping(department);
             return new ResponseEntity<>(savedRole, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error saving role: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 }
