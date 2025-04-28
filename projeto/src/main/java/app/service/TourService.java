@@ -49,4 +49,8 @@ public class TourService{
         return put;
     }
 
+    List<Tour> getTourByName(String name){
+        return tourRepository.findByNameContains(name);  
+    }
+
 }
