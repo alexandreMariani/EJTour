@@ -32,11 +32,15 @@ public class CommentController {
     private UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<?> createComment(@RequestParam Long userId, @RequestBody String content) {
-            User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-            Comment comment = new Comment(content, user);
+    public ResponseEntity<?> createComment(@RequestBody Comment comment) {
+
+      User user = new User();
+      user.setId(1L);
+      comment.setUser(user);
             Comment savedComment = commentRepository.save(comment);
             return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
+
+            
     }
 
 //     @PostMapping("/{commentId}/likes")

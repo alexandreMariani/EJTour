@@ -24,10 +24,7 @@ public class CommentService {
     private UserRepository userRepository;
 
 
-    public Comment createComment(Long userId, String content) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        Comment comment = new Comment(content, user);
+    public Comment createComment(Comment comment) {
         return commentRepository.save(comment);
     }
 
@@ -37,8 +34,6 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new RuntimeException("Comment not found"));
         Like like = new Like();
-        like.setUser(user);
-        like.setComment(comment);
         return likeRepository.save(like);
     }
 
