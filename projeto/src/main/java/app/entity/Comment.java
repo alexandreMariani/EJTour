@@ -35,8 +35,8 @@ public class Comment {
     @JsonBackReference
     private User user;
 
-    public Comment(String text, User user) {
-        this.text = text;
+    public void setUser(User user) {
         this.user = user;
     }
+
 }
