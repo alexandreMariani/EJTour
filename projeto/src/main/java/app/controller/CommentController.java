@@ -32,7 +32,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<?> createComment(@RequestBody Comment comment) {
 
-      User user = new User();
+      User user = new User(null, null, null, null, null);
       user.setId(1L);
       comment.setUser(user);
             Comment savedComment = commentRepository.save(comment);

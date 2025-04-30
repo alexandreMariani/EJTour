@@ -3,7 +3,8 @@ package app.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import app.entity.User;
 import app.repository.UserRepository;
 
@@ -13,9 +14,13 @@ import java.util.Optional;
 @Service
 public class UserService{
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final Validator validator;
 
+    public UserService(UserRepository userRepository, Validator validator) {
+        this.userRepository = userRepository;
+        this.validator = validator;
+    }
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -37,6 +42,10 @@ public class UserService{
     }
 
     public User postMapping(User user) {
+        var violations = validator.validate(user);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
         User post = userRepository.save(user);
         return post;
 

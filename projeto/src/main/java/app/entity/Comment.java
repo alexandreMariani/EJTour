@@ -1,22 +1,14 @@
 package app.entity;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 @JsonIgnoreProperties({"user", "likes"})
 public class Comment {
 
@@ -38,5 +30,30 @@ public class Comment {
     public void setUser(User user) {
         this.user = user;
     }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+
+    public Comment( String name,String text) {
+        this.name = name;
+        this.text = text;
+    }
+
+
 
 }

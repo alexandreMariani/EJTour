@@ -1,8 +1,6 @@
 package app.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 import java.util.Set;
 
@@ -21,9 +19,6 @@ import jakarta.persistence.OneToMany;
 
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 @Validated
 public class Role {
 
@@ -38,4 +33,17 @@ public class Role {
     @JsonIgnoreProperties("role")
     private Set<User> users;
 
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Role(String name){
+        this.name= name;
+    }
 }
