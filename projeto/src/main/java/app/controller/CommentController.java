@@ -28,8 +28,6 @@ public class CommentController {
     @Autowired
     private LikeRepository likeRepository;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @PostMapping
     public ResponseEntity<?> createComment(@RequestBody Comment comment) {

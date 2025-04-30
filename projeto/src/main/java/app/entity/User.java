@@ -18,9 +18,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 @Validated
 @JsonIgnoreProperties({"likes", "tours"}) 
 public class User {
@@ -63,11 +60,24 @@ public class User {
     @JsonIgnoreProperties("users") // Evita serializar a lista de 'users' no relacionamento de 'Tour'
     private Set<Tour> tours = new HashSet<>();
 
+    public User(String name, String email, LocalDate birthday, String password, Role role) {
+        this.birthday = birthday;
+        this.email = email;
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.role = role;
+    }
+
     public String getPassword(){
         return this.password;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setName(String string) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
