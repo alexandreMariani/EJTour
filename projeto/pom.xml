@@ -34,8 +34,8 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version> <!-- Certifique-se de usar a versão correta -->
-            <scope>provided</scope> <!-- Usar 'provided' já que é fornecido pelo contêiner de servlet -->
+            <version>4.0.1</version> 
+            <scope>provided</scope> 
         </dependency>
 
         <dependency>
@@ -71,7 +71,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.36</version>
             <scope>provided</scope>
         </dependency>
 

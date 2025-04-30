@@ -31,14 +31,14 @@ public class CommentServiceTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
 
-        commentService = new CommentService();
+        commentService = new CommentService(commentRepository, validator);
     }
 
     @Test
     @DisplayName("Cena 01 - validando campos obrigatorios ")
     void cenario01(){
         Comment comment = new Comment("", "");
-        
+        when(commentRepository.save(comment)).thenReturn(comment);
         assertThrows(ConstraintViolationException.class, () -> commentService.createComment(comment));
     }
 
@@ -53,4 +53,5 @@ public class CommentServiceTest {
         List<Comment> result = commentService.getAllComments();
         assertEquals(1, result.size());
     }
+
 }

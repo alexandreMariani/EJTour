@@ -1,29 +1,28 @@
 package app.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
 import app.entity.Role;
 import app.entity.User;
 import app.repository.UserRepository;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
-import jakarta.validation.ConstraintViolationException;
 
 public class UserServiceTest {
 
@@ -39,7 +38,7 @@ public class UserServiceTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
 
-        userService = new UserService(null, validator);
+        userService = new UserService(userRepository, validator);
     }
 
     @Test
@@ -54,9 +53,7 @@ void cenario01() {
 @DisplayName("Cena 02 - Cadastro de usuário válido")
 void cenario02() {
     User user = new User("Maria", "maria@example.com", LocalDate.of(1990, 1, 1), "senhaSegura", new Role (null));
-
     when(userRepository.save(any(User.class))).thenReturn(user);
-
     User saved = userService.postMapping(user);
     assertEquals("Maria", saved.getName());
 }
@@ -65,9 +62,7 @@ void cenario02() {
 @DisplayName("Cena 03 - Cadastro com e-mail duplicado")
 void cenario03() {
     User user = new User("João", "joao@example.com", LocalDate.of(1995, 2, 2), "senhaSegura", new Role(null));
-
     when(userRepository.save(any(User.class))).thenThrow(new RuntimeException("Email duplicado"));
-
     assertThrows(RuntimeException.class, () -> userService.postMapping(user));
 }
 

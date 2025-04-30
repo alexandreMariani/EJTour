@@ -32,14 +32,14 @@ public class RoleServiceTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
 
-        roleService = new RoleService();
+        roleService = new RoleService(roleRepository, validator);
     }
 
     @Test
     @DisplayName("cena 01 - validando campo obrigatorio")
     void cenario01(){
         Role role = new Role("");
-
+        when(roleRepository.save(role)).thenReturn(role);
         assertThrows(ConstraintViolationException.class, () -> roleService.postMapping(role));
     }
 

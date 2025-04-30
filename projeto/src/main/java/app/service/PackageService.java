@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import app.repository.PackageRepository;
+import jakarta.validation.Validator;
 import app.entity.Package;
 
 @Service
@@ -17,7 +18,12 @@ public class PackageService{
 
     @Autowired
     private PackageRepository packageRepository;
+    private Validator validator;
 
+    public PackageService(PackageRepository packageRepository, Validator validator) {
+        this.packageRepository = packageRepository;
+        this.validator = validator;
+    }
     public List<Package> findAll() {
         return packageRepository.findAll();
     }

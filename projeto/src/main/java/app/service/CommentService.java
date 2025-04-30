@@ -6,6 +6,8 @@ import app.entity.User;
 import app.repository.CommentRepository;
 import app.repository.LikeRepository;
 import app.repository.UserRepository;
+import jakarta.validation.Validator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +18,14 @@ public class CommentService {
 
     @Autowired
     private CommentRepository commentRepository;
-
-    @Autowired
     private LikeRepository likeRepository;
-
-    @Autowired
     private UserRepository userRepository;
+    private Validator validator;
 
+    public CommentService(CommentRepository commentRepository, Validator validator) {
+        this.commentRepository = commentRepository;
+        this.validator = validator;
+    }
 
     public Comment createComment(Comment comment) {
         return commentRepository.save(comment);

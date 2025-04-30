@@ -39,13 +39,14 @@ public class TourServiceTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
 
-        tourService = new TourService();
+        tourService = new TourService(tourRepository, validator);
     }
 
     @Test
     @DisplayName("Cena 01 - validando campos obrigatorios")
     void cenario01(){
         Tour tour = new Tour(null, null);
+        when(tourRepository.save(any(Tour.class))).thenReturn(tour);
         assertThrows(ConstraintViolationException.class, () -> tourService.postMapping(tour));
     }
 
@@ -55,13 +56,9 @@ public class TourServiceTest {
         List<Tour> tours = List.of(
             new Tour("jean", "testestestestes")
         );
-
-
         when(tourRepository.findAll()).thenReturn(tours);
-
         List<Tour> result = tourService.findAll();
         assertEquals(1, result.size());
-
     }
 
     @Test
@@ -74,10 +71,8 @@ public class TourServiceTest {
     @Test
     @DisplayName("Cena 04 - Buscar por ID existente")
     void cenario04(){
-
         Tour tour = new Tour("jean", "tsts");
         when(tourRepository.findById(1L)).thenReturn(Optional.of(tour));
-
         Tour result = tourService.findById(1L);
         assertEquals("jean", result.getName());
 
@@ -88,7 +83,6 @@ public class TourServiceTest {
     void cenario05(){
         Tour tour = new Tour("cataratas", "aguas e aguas");
         when(tourRepository.save(any(Tour.class))).thenReturn(tour);
-        
         Tour result = tourService.putMapping(tour);
         assertEquals("cataratas", result.getName());
     }
@@ -98,17 +92,14 @@ public class TourServiceTest {
     @DisplayName("Cena 06 - Excluir tour")
     void cenario06(){
         when(tourRepository.existsById(1L)).thenReturn(true);
-
         ResponseEntity<Void> response = tourService.deleteMapping(1L);
         assertEquals(204, response.getStatusCodeValue());
-
     }
 
     @Test
     @DisplayName("Cena 07 - Excluir tour inexistente")
     void cenario07(){
         when(tourRepository.existsById(999L)).thenReturn(false);
-
         ResponseEntity<Void> response = tourService.deleteMapping(999L);
         assertEquals(404, response.getStatusCodeValue());
     }

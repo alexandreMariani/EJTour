@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import app.entity.Tour;
 import app.repository.TourRepository;
+import jakarta.validation.Validator;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,12 @@ public class TourService{
 
     @Autowired
     private TourRepository tourRepository;
+    private Validator validator;
 
+    public TourService(TourRepository tourRepository, Validator validator) {
+        this.tourRepository = tourRepository;
+        this.validator = validator;
+    }
     public List<Tour> findAll() {
         return tourRepository.findAll();
     }

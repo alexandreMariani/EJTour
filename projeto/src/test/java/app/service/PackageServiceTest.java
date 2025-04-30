@@ -34,13 +34,14 @@ public class PackageServiceTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
 
-        packageService = new PackageService();
+        packageService = new PackageService(packageRepository, validator);
     }
 
     @Test
     @DisplayName("Cena 01 - Validando campos obrigatorio")
     void cenario01() {
         Package pacote = new Package("", "");
+        when(packageRepository.save(any(Package.class))).thenReturn(pacote);
         assertThrows(ConstraintViolationException.class, () -> packageService.postMapping(pacote));
     }
 
@@ -91,7 +92,6 @@ public class PackageServiceTest {
 
         ResponseEntity<Void> response = packageService.deleteMapping(1L);
         assertEquals(204, response.getStatusCodeValue());
-
     }
 
     @Test
