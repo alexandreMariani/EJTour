@@ -1,8 +1,9 @@
 package app.service;
 
 import app.entity.User;
+import app.entity.UserAuthenticated;
 import app.repository.UserRepository;
-import app.Security.UserAuthenticated;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
