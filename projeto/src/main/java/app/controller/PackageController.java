@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import app.service.PackageService;
 import app.entity.Package;
-import app.entity.Tour;
 
 import java.util.List;
 

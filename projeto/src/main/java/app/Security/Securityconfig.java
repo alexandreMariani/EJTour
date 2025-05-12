@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +22,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 
+@EnableMethodSecurity(prePostEnabled = true)
 @Configuration
 @EnableWebSecurity
 public class Securityconfig {
@@ -37,7 +39,7 @@ public class Securityconfig {
                 .requestMatchers("/authenticate").permitAll()
                 .anyRequest().authenticated())
             .httpBasic(Customizer.withDefaults())
-            .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults())); // corrigido aqui
+            .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults())); 
 
         return http.build();
     }
