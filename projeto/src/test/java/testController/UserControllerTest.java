@@ -1,4 +1,5 @@
 package testController;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -7,7 +8,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import app.controller.UserController;
 import app.entity.User;
 import app.service.UserService;
+
 import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTest {
@@ -118,15 +120,13 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.name").value("New User"));
     }
 
-@Test
-void testDelete() throws Exception {
-    when(userService.deleteMapping(1L)).thenReturn(ResponseEntity.noContent().build());
+    @Test
+    void testDelete() throws Exception {
+        doNothing().when(userService).deleteMapping(1L);
 
-    mockMvc.perform(delete("/users/{id}", 1L))
-            .andExpect(status().isNoContent())
-            .andExpect(content().string("User deleted successfully"));
-}
-
+        mockMvc.perform(delete("/users/{id}", 1L))
+                .andExpect(status().isNoContent());
+    }
 
     @Test
     void testEdit() throws Exception {
@@ -143,3 +143,4 @@ void testDelete() throws Exception {
                 .andExpect(jsonPath("$.name").value("Updated User"));
     }
 }
+

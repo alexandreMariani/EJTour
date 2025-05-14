@@ -1,8 +1,7 @@
 package testService;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import app.entity.User;
 import app.repository.UserRepository;
@@ -67,4 +66,26 @@ public class UserServiceTest {
 
         assertThrows(RuntimeException.class, () -> userService.findById(1L));
     }
+
+    @Test
+    void testFindByEmail() {
+        User user = new User();
+        user.setEmail("email@example.com");
+
+        when(userRepository.findByEmail("email@example.com")).thenReturn(user);
+
+        User result = userService.findByEmail("email@example.com");
+
+        assertEquals("email@example.com", result.getEmail());
+    }
+
+    @Test
+    void testDeleteMapping() {
+        // Apenas verifica se não lança exceção e chama o método corretamente
+        doNothing().when(userRepository).deleteById(1L);
+
+        assertDoesNotThrow(() -> userService.deleteMapping(1L));
+        verify(userRepository, times(1)).deleteById(1L);
+    }
 }
+
