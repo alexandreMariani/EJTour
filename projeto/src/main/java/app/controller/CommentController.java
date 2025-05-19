@@ -51,8 +51,8 @@ public class CommentController {
         .orElseThrow(() -> new RuntimeException("Comentário não encontrado"));
 
     Like like = new Like();
-    like.setUser(user);
-    like.setComment(comment);
+    // like.setUser(user);
+    // like.setComment(comment);
     Like savedLike = likeRepository.save(like);
 
     return new ResponseEntity<>(savedLike, HttpStatus.CREATED);

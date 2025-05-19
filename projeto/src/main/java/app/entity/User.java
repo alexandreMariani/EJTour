@@ -8,14 +8,27 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Getter
@@ -23,7 +36,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Validated
 @JsonIgnoreProperties({"likes", "tours"}) 
-public class User {
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,6 +75,13 @@ public class User {
     )
     @JsonIgnoreProperties("users") 
     private Set<Tour> tours = new HashSet<>();
+
+
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+    }
 
     public Long getId() {
         return id;
@@ -126,4 +146,9 @@ public class User {
     public void setTours(Set<Tour> tours) {
         this.tours = tours;
     }
+
+    @Override
+    public String getUsername() {
+    return this.email;
+}
 }

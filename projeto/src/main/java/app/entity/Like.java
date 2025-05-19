@@ -28,4 +28,7 @@ public class Like {
     @JoinColumn(name = "user_id", nullable = false)
     private User user; 
 
+    public void setId(long id) {
+    this.id = id;
+}
 }

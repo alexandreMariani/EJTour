@@ -1,12 +1,14 @@
 package testService;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import static org.mockito.Mockito.when;
+
 import app.entity.Package;
 import app.repository.PackageRepository;
-
 import app.service.PackageService;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -15,8 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +30,7 @@ public class PackageServiceTest {
     private PackageService packageService;
 
     @Test
+    @DisplayName("Unit Test - FindAll: deve retornar lista de pacotes")
     void testFindAll() {
         Package pack = new Package();
         List<Package> mockList = Arrays.asList(pack);
@@ -41,6 +42,7 @@ public class PackageServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - Save e Update: deve salvar e atualizar pacote")
     void testPostAndPutMapping() {
         Package pack = new Package();
         when(packageRepository.save(pack)).thenReturn(pack);
@@ -53,6 +55,7 @@ public class PackageServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - FindById: deve retornar pacote pelo id")
     void testFindById() {
         Package pack = new Package();
         when(packageRepository.findById(1L)).thenReturn(Optional.of(pack));
@@ -63,6 +66,7 @@ public class PackageServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - FindById: deve lançar exceção se pacote não encontrado")
     void testFindByIdNotFound() {
         when(packageRepository.findById(1L)).thenReturn(Optional.empty());
 

@@ -5,6 +5,7 @@ import app.entity.Tour;
 import app.service.TourService;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Integração – TourController")
 public class TourControllerIntegrationTest {
 
     private MockMvc mockMvc;
@@ -42,6 +44,7 @@ public class TourControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("Integração – findById deve retornar Tour existente")
     void testFindById() throws Exception {
         Tour tour = new Tour();
         tour.setId(1L);
@@ -58,6 +61,7 @@ public class TourControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("Integração – findById deve retornar 404 quando Tour não existe")
     void testFindByIdNotFound() throws Exception {
         when(tourService.findById(1L)).thenReturn(null);
 
@@ -67,6 +71,7 @@ public class TourControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("Integração – findAll deve retornar lista de Tours")
     void testFindAll() throws Exception {
         Tour tour1 = new Tour();
         tour1.setId(1L);
@@ -84,43 +89,46 @@ public class TourControllerIntegrationTest {
                 .andExpect(jsonPath("$[1].name").value("Tour 2"));
     }
 
-//     @Test
-//     void testSave() throws Exception {
-//         Tour tour = new Tour();
-//         tour.setId(1L);
-//         tour.setName("New Tour");
-//         tour.setDescription("Description");
+    @Test
+    @DisplayName("Integração – postMapping deve criar novo Tour")
+    void testSave() throws Exception {
+        Tour tour = new Tour();
+        tour.setId(1L);
+        tour.setName("New Tour");
+        tour.setDescription("Description");
 
-//         when(tourService.postMapping(any(Tour.class))).thenReturn(tour);
+        when(tourService.postMapping(any(Tour.class))).thenReturn(tour);
 
-//         mockMvc.perform(post("/tour")
-//                 .contentType(MediaType.APPLICATION_JSON)
-//                 .content("{\"name\":\"New Tour\", \"description\":\"Description\"}"))
-//                 .andExpect(status().isCreated())
-//                 .andExpect(jsonPath("$.name").value("New Tour"));
-//     }
+        mockMvc.perform(post("/tour")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"New Tour\", \"description\":\"Description\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value("New Tour"));
+    }
 
-//     @Test
-//     void testDelete() throws Exception {
-//         when(tourService.deleteMapping(1L)).thenReturn(ResponseEntity.noContent().build());
+    @Test
+    @DisplayName("Integração – deleteMapping deve remover Tour existente")
+    void testDelete() throws Exception {
+        when(tourService.deleteMapping(1L)).thenReturn(ResponseEntity.noContent().build());
 
-//         mockMvc.perform(delete("/tour/{id}", 1L))
-//                 .andExpect(status().isNoContent())
-//                 .andExpect(content().string("Tour deleted successfully"));
-//     }
+        mockMvc.perform(delete("/tour/{id}", 1L))
+                .andExpect(status().isNoContent())
+                .andExpect(content().string("Tour deleted successfully"));
+    }
 
-//     @Test
-//     void testEdit() throws Exception {
-//         Tour tour = new Tour();
-//         tour.setId(1L);
-//         tour.setName("Updated Tour");
+    @Test
+    @DisplayName("Integração – putMapping deve atualizar Tour")
+    void testEdit() throws Exception {
+        Tour tour = new Tour();
+        tour.setId(1L);
+        tour.setName("Updated Tour");
 
-//         when(tourService.putMapping(any(Tour.class))).thenReturn(tour);
+        when(tourService.putMapping(any(Tour.class))).thenReturn(tour);
 
-//         mockMvc.perform(put("/tour")
-//                 .contentType(MediaType.APPLICATION_JSON)
-//                 .content("{\"id\":1, \"name\":\"Updated Tour\"}"))
-//                 .andExpect(status().isOk())
-//                 .andExpect(jsonPath("$.name").value("Updated Tour"));
-//     }
+        mockMvc.perform(put("/tour")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id\":1, \"name\":\"Updated Tour\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Updated Tour"));
+    }
 }

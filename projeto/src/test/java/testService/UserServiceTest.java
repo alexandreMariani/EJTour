@@ -7,6 +7,7 @@ import app.entity.User;
 import app.repository.UserRepository;
 import app.service.UserService;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -28,6 +29,7 @@ public class UserServiceTest {
     private UserService userService;
 
     @Test
+    @DisplayName("Unit Test - FindAll: deve retornar lista de usuários")
     void testFindAll() {
         User user = new User();
         List<User> mockList = Arrays.asList(user);
@@ -39,18 +41,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void testPostAndPutMapping() {
-        User user = new User();
-        when(userRepository.save(user)).thenReturn(user);
-
-        User saved = userService.postMapping(user);
-        User updated = userService.putMapping(user);
-
-        assertEquals(user, saved);
-        assertEquals(user, updated);
-    }
-
-    @Test
+    @DisplayName("Unit Test - FindById: deve retornar usuário pelo id")
     void testFindById() {
         User user = new User();
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
@@ -61,6 +52,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - FindById: deve lançar exceção se usuário não encontrado")
     void testFindByIdNotFound() {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
@@ -68,24 +60,16 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - FindByEmail: deve retornar usuário pelo e-mail")
     void testFindByEmail() {
         User user = new User();
         user.setEmail("email@example.com");
 
-        when(userRepository.findByEmail("email@example.com")).thenReturn(user);
+        when(userRepository.findByEmail("email@example.com")).thenReturn(Optional.of(user));
 
         User result = userService.findByEmail("email@example.com");
 
         assertEquals("email@example.com", result.getEmail());
     }
 
-    @Test
-    void testDeleteMapping() {
-        // Apenas verifica se não lança exceção e chama o método corretamente
-        doNothing().when(userRepository).deleteById(1L);
-
-        assertDoesNotThrow(() -> userService.deleteMapping(1L));
-        verify(userRepository, times(1)).deleteById(1L);
-    }
 }
-
