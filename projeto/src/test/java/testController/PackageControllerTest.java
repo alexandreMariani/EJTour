@@ -5,6 +5,7 @@ import app.entity.Package;
 import app.service.PackageService;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -42,6 +43,7 @@ public class PackageControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - FindById: retorna pacote pelo id com sucesso")
     void testFindById() throws Exception {
         Package pack = new Package();
         pack.setId(1L);
@@ -58,6 +60,7 @@ public class PackageControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - FindById: retorna 404 quando pacote não encontrado")
     void testFindByIdNotFound() throws Exception {
         when(packageService.findById(1L)).thenReturn(null);
 
@@ -67,6 +70,7 @@ public class PackageControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - FindAll: retorna lista de todos os pacotes")
     void testFindAll() throws Exception {
         Package pack1 = new Package();
         pack1.setId(1L);
@@ -85,6 +89,7 @@ public class PackageControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - Save: cria novo pacote com sucesso")
     void testSave() throws Exception {
         Package pack = new Package();
         pack.setId(1L);
@@ -95,12 +100,13 @@ public class PackageControllerTest {
 
         mockMvc.perform(post("/package")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"title\":\"New Package\", \"description\":\"Description\"}"))  // Mudança aqui
+                .content("{\"title\":\"New Package\", \"description\":\"Description\"}"))  
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.title").value("New Package"));  // Mudança aqui
+                .andExpect(jsonPath("$.title").value("New Package"));  
     }
 
     @Test
+    @DisplayName("Integration Test - Delete: deleta pacote pelo id com sucesso")
     void testDelete() throws Exception {
         when(packageService.deleteMapping(1L)).thenReturn(ResponseEntity.noContent().build());
 
@@ -110,17 +116,18 @@ public class PackageControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - Edit: atualiza pacote com sucesso")
     void testEdit() throws Exception {
         Package pack = new Package();
         pack.setId(1L);
-        pack.setTitle("Updated Package");  // Correção aqui
+        pack.setTitle("Updated Package");  
 
         when(packageService.putMapping(any(Package.class))).thenReturn(pack);
 
         mockMvc.perform(put("/package")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\":1, \"title\":\"Updated Package\"}"))  // Mudança aqui
+                .content("{\"id\":1, \"title\":\"Updated Package\"}"))  
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Updated Package"));  // Mudança aqui
+                .andExpect(jsonPath("$.title").value("Updated Package"));  
     }
 }

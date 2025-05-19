@@ -1,4 +1,5 @@
 package testService;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -6,6 +7,7 @@ import static org.mockito.Mockito.when;
 import app.entity.Role;
 import app.repository.RoleRepository;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -27,6 +29,7 @@ public class RoleServiceTest {
     private RoleService roleService;
 
     @Test
+    @DisplayName("Unit Test - FindById: deve retornar role pelo id")
     void testFindById() {
         Role role = new Role();
         when(roleRepository.findById(1L)).thenReturn(Optional.of(role));
@@ -37,6 +40,7 @@ public class RoleServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - FindById: deve lançar exceção se role não encontrado")
     void testFindByIdNotFound() {
         when(roleRepository.findById(1L)).thenReturn(Optional.empty());
 
@@ -44,6 +48,7 @@ public class RoleServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - Save (POST): deve salvar role")
     void testPostMapping() {
         Role role = new Role();
         when(roleRepository.save(role)).thenReturn(role);

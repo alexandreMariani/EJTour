@@ -3,6 +3,7 @@ package app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import app.entity.User;
@@ -23,6 +24,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<?> findById(@PathVariable Long id) {
             User user = userService.findById(id);
             if (user != null) {
@@ -44,6 +46,7 @@ public class UserController {
 }
 
     @GetMapping
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<?> findAll() {
             List<User> users = userService.findAll();
             return new ResponseEntity<>(users, HttpStatus.OK);
@@ -51,6 +54,7 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<?> save(@RequestBody User user) {
 
             User savedUser = userService.postMapping(user);
@@ -59,6 +63,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<?> delete(@PathVariable Long id) {
             userService.deleteMapping(id);
             return new ResponseEntity<>("User deleted successfully", HttpStatus.NO_CONTENT);
@@ -66,6 +71,7 @@ public class UserController {
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<?> edit(@RequestBody User user) {
             User updatedUser = userService.putMapping(user);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);

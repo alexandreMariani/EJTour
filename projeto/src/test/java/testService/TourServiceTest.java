@@ -1,11 +1,13 @@
 package testService;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import app.entity.Tour;
 import app.repository.TourRepository;
+import app.service.TourService;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -17,8 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import app.service.TourService;
-
 @ExtendWith(MockitoExtension.class)
 public class TourServiceTest {
 
@@ -29,6 +29,7 @@ public class TourServiceTest {
     private TourService tourService;
 
     @Test
+    @DisplayName("Unit Test - FindAll: deve retornar lista de tours")
     void testFindAll() {
         Tour tour = new Tour();
         when(tourRepository.findAll()).thenReturn(Arrays.asList(tour));
@@ -39,6 +40,7 @@ public class TourServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - FindById: deve retornar tour pelo id")
     void testFindById() {
         Tour tour = new Tour();
         when(tourRepository.findById(1L)).thenReturn(Optional.of(tour));
@@ -49,6 +51,7 @@ public class TourServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - FindById: deve lançar exceção se tour não encontrado")
     void testFindByIdNotFound() {
         when(tourRepository.findById(1L)).thenReturn(Optional.empty());
 
@@ -56,6 +59,7 @@ public class TourServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - Save (POST): deve salvar tour")
     void testPostMapping() {
         Tour tour = new Tour();
         when(tourRepository.save(tour)).thenReturn(tour);
@@ -66,6 +70,7 @@ public class TourServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - Save (PUT): deve atualizar tour")
     void testPutMapping() {
         Tour tour = new Tour();
         when(tourRepository.save(tour)).thenReturn(tour);

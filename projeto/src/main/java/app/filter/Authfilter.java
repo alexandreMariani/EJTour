@@ -4,12 +4,15 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
 @Component
+@Profile("auth-filter")
 public class Authfilter extends OncePerRequestFilter {
 
     @Override
@@ -18,14 +21,9 @@ public class Authfilter extends OncePerRequestFilter {
         String method = request.getMethod();
 
         // Rotas públicas
-        if (path.equals("/users/login") || (path.equals("/users") && method.equals("POST"))) return true;
-        if (path.equals("/authentication")) return true;
+        if (path.equals("/login") ||  method.equals("POST")) return true;
 
-        if (path.matches("/tour(/\\d+)?") && method.equals("GET")) return true;
-        if (path.matches("/package(/\\d+)?") && method.equals("GET")) return true;
-        if (path.equals("/comments") && method.equals("GET")) return true;
-
-
+        // return true;
         return false;
     }
 

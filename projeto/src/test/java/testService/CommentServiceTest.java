@@ -1,4 +1,5 @@
 package testService;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -11,6 +12,7 @@ import app.repository.LikeRepository;
 import app.repository.UserRepository;
 import app.service.CommentService;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -38,6 +40,7 @@ public class CommentServiceTest {
     private CommentService commentService;
 
     @Test
+    @DisplayName("Unit Test - CreateComment: deve criar e salvar comentário")
     void testCreateComment() {
         Comment comment = new Comment();
         when(commentRepository.save(comment)).thenReturn(comment);
@@ -48,6 +51,7 @@ public class CommentServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - GetAllComments: deve retornar lista de comentários")
     void testGetAllComments() {
         Comment comment = new Comment();
         when(commentRepository.findAll()).thenReturn(Arrays.asList(comment));
@@ -58,21 +62,23 @@ public class CommentServiceTest {
     }
 
     // @Test
+    // @DisplayName("Unit Test - LikeComment: deve adicionar like em comentário")
     // void testLikeComment() {
     //     User user = new User();
     //     Comment comment = new Comment();
     //     Like like = new Like();
-
+    //
     //     org.mockito.Mockito.lenient().when(userRepository.findById(1L)).thenReturn(Optional.of(user));
     //     org.mockito.Mockito.lenient().when(commentRepository.findById(2L)).thenReturn(Optional.of(comment));
     //     org.mockito.Mockito.lenient().when(likeRepository.save(org.mockito.Mockito.any())).thenReturn(like);
-
+    //
     //     Like result = commentService.likeComment(1L, 2L);
-
+    //
     //     assertEquals(like, result);
     // }
 
     @Test
+    @DisplayName("Unit Test - LikeComment: deve lançar exceção se usuário não encontrado")
     void testLikeCommentUserNotFound() {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
@@ -80,6 +86,7 @@ public class CommentServiceTest {
     }
 
     @Test
+    @DisplayName("Unit Test - LikeComment: deve lançar exceção se comentário não encontrado")
     void testLikeCommentCommentNotFound() {
         when(userRepository.findById(1L)).thenReturn(Optional.of(new User()));
         when(commentRepository.findById(2L)).thenReturn(Optional.empty());

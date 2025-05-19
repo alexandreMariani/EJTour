@@ -2,6 +2,7 @@ package app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import app.entity.User;
@@ -14,7 +15,11 @@ import java.util.Optional;
 public class UserService{
 
     @Autowired
+	private BCryptPasswordEncoder bcryptEncoder;
+
+    @Autowired
     private UserRepository userRepository;
+
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -37,10 +42,21 @@ public class UserService{
     }
 
     public User postMapping(User user) {
+        String senhaCriptografada = bcryptEncoder.encode(user.getPassword());
+		user.setPassword(senhaCriptografada);
         User post = userRepository.save(user);
         return post;
 
     }
+
+    public String save(User user) {
+		
+		String senhaCriptografada = bcryptEncoder.encode(user.getPassword());
+		user.setPassword(senhaCriptografada);
+		
+		User post = userRepository.save(user);
+		return "Usuario salvo com sucesso";
+	}
 
     public List<User> getUsersByName(String name) {
         return userRepository.findByNameContains(name);  

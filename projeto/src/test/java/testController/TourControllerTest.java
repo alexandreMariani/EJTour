@@ -5,6 +5,7 @@ import app.entity.Tour;
 import app.service.TourService;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -42,6 +43,7 @@ public class TourControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - FindById: retorna tour pelo id com sucesso")
     void testFindById() throws Exception {
         Tour tour = new Tour();
         tour.setId(1L);
@@ -58,6 +60,7 @@ public class TourControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - FindById: retorna 404 quando tour não encontrado")
     void testFindByIdNotFound() throws Exception {
         when(tourService.findById(1L)).thenReturn(null);
 
@@ -67,6 +70,7 @@ public class TourControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - FindAll: retorna lista de todas tours")
     void testFindAll() throws Exception {
         Tour tour1 = new Tour();
         tour1.setId(1L);
@@ -85,6 +89,7 @@ public class TourControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - Save: cria nova tour com sucesso")
     void testSave() throws Exception {
         Tour tour = new Tour();
         tour.setId(1L);
@@ -101,6 +106,7 @@ public class TourControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - Delete: deleta tour pelo id com sucesso")
     void testDelete() throws Exception {
         when(tourService.deleteMapping(1L)).thenReturn(ResponseEntity.noContent().build());
 
@@ -110,6 +116,7 @@ public class TourControllerTest {
     }
 
     @Test
+    @DisplayName("Integration Test - Edit: atualiza dados da tour com sucesso")
     void testEdit() throws Exception {
         Tour tour = new Tour();
         tour.setId(1L);
