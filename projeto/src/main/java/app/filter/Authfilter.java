@@ -34,7 +34,7 @@ public class Authfilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        if (authHeader == null || !authHeader.equals("Bearer")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Acesso negado: token ausente ou inválido");
             return;

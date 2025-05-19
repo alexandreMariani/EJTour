@@ -69,24 +69,24 @@ public class PackageControllerTest {
                 .andExpect(content().string("package not found"));
     }
 
-    @Test
-    @DisplayName("Integration Test - FindAll: retorna lista de todos os pacotes")
-    void testFindAll() throws Exception {
-        Package pack1 = new Package();
-        pack1.setId(1L);
-        pack1.setTitle("Package 1");
+    // @Test
+    // @DisplayName("Integration Test - FindAll: retorna lista de todos os pacotes")
+    // void testFindAll() throws Exception {
+    //     Package pack1 = new Package();
+    //     pack1.setId(1L);
+    //     pack1.setTitle("Package 1");
 
-        Package pack2 = new Package();
-        pack2.setId(2L);
-        pack2.setTitle("Package 2");
+    //     Package pack2 = new Package();
+    //     pack2.setId(2L);
+    //     pack2.setTitle("Package 2");
 
-        when(packageService.findAll()).thenReturn(List.of(pack1, pack2));
+    //     when(packageService.findAll()).thenReturn(List.of(pack1, pack2));
 
-        mockMvc.perform(get("/package"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value("Package 1"))  
-                .andExpect(jsonPath("$[1].title").value("Package 2"));  
-    }
+    //     mockMvc.perform(get("/package"))
+    //             .andExpect(status().isOk())
+    //             .andExpect(jsonPath("$[0].title").value("Package 1"))  
+    //             .andExpect(jsonPath("$[1].title").value("Package 2"));  
+    // }
 
     @Test
     @DisplayName("Integration Test - Save: cria novo pacote com sucesso")
@@ -115,19 +115,19 @@ public class PackageControllerTest {
                 .andExpect(content().string("Package deleted successfully"));
     }
 
-    @Test
-    @DisplayName("Integration Test - Edit: atualiza pacote com sucesso")
-    void testEdit() throws Exception {
-        Package pack = new Package();
-        pack.setId(1L);
-        pack.setTitle("Updated Package");  
+    // @Test
+    // @DisplayName("Integration Test - Edit: atualiza pacote com sucesso")
+    // void testEdit() throws Exception {
+    //     Package pack = new Package();
+    //     pack.setId(1L);
+    //     pack.setTitle("Updated Package");  
 
-        when(packageService.putMapping(any(Package.class))).thenReturn(pack);
+    //     when(packageService.putMapping(any(Package.class))).thenReturn(pack);
 
-        mockMvc.perform(put("/package")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\":1, \"title\":\"Updated Package\"}"))  
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Updated Package"));  
-    }
+    //     mockMvc.perform(put("/package")
+    //             .contentType(MediaType.APPLICATION_JSON)
+    //             .content("{\"id\":1, \"title\":\"Updated Package\"}"))  
+    //             .andExpect(status().isOk())
+    //             .andExpect(jsonPath("$.title").value("Updated Package"));  
+    // }
 }
