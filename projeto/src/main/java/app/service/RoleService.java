@@ -11,7 +11,7 @@ import app.repository.RoleRepository;
 @Service
 public class RoleService {
 
-    @Autowired
+    @Autowired"
     private RoleRepository roleRepository;
 
     public Role findById(Long id) {

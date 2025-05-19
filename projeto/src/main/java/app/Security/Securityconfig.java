@@ -56,10 +56,7 @@ public class Securityconfig {
                 .authenticationProvider(authenticationProvider)
 		        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 		        .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-            // .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults()));
-            // .authorizeHttpRequests(auth -> auth
-            // .anyRequest().permitAll());
-            // .httpBasic(Customizer.withDefaults())
+
 
         return http.build();
     }
@@ -68,19 +65,14 @@ public class Securityconfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Liberar só do seu frontend
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
 
-        // Métodos permitidos
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
-        // Permitir todos os headers (ou especifique os que usar)
         configuration.setAllowedHeaders(List.of("*"));
 
-        // Se precisar enviar cookies/autenticação junto
         configuration.setAllowCredentials(true);
 
-        // Configura o caminho para aplicar essa configuração (todas as rotas)
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 

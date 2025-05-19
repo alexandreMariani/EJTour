@@ -19,11 +19,7 @@ public class Authfilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
         String method = request.getMethod();
-
-        // Rotas públicas
         if (path.equals("/login") ||  method.equals("POST")) return true;
-
-        // return true;
         return false;
     }
 
