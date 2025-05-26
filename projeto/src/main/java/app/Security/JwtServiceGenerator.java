@@ -32,7 +32,7 @@ public class JwtServiceGenerator {
 		payloadData.put("username", usuario.getUsername());
 		payloadData.put("id", usuario.getId().toString());
 		payloadData.put("roleId", usuario.getRole().getId());
-	
+		payloadData.put("email", usuario.getEmail());
 		return payloadData;
 	}
 	
