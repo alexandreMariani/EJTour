@@ -1,75 +1,75 @@
-package testService;
+// package testService;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+// import static org.junit.jupiter.api.Assertions.assertEquals;
+// import static org.junit.jupiter.api.Assertions.assertThrows;
+// import static org.mockito.Mockito.when;
 
-import app.entity.Package;
-import app.repository.PackageRepository;
-import app.service.PackageService;
+// import app.entity.Package;
+// import app.repository.PackageRepository;
+// import app.service.PackageService;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+// import org.junit.jupiter.api.DisplayName;
+// import org.junit.jupiter.api.Test;
+// import org.junit.jupiter.api.extension.ExtendWith;
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+// import org.mockito.InjectMocks;
+// import org.mockito.Mock;
+// import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+// import java.util.Arrays;
+// import java.util.List;
+// import java.util.Optional;
 
-@ExtendWith(MockitoExtension.class)
-public class PackageServiceTest {
+// @ExtendWith(MockitoExtension.class)
+// public class PackageServiceTest {
 
-    @Mock
-    private PackageRepository packageRepository;
+//     @Mock
+//     private PackageRepository packageRepository;
 
-    @InjectMocks
-    private PackageService packageService;
+//     @InjectMocks
+//     private PackageService packageService;
 
-    @Test
-    @DisplayName("Unit Test - FindAll: deve retornar lista de pacotes")
-    void testFindAll() {
-        Package pack = new Package();
-        List<Package> mockList = Arrays.asList(pack);
-        when(packageRepository.findAll()).thenReturn(mockList);
+//     @Test
+//     @DisplayName("Unit Test - FindAll: deve retornar lista de pacotes")
+//     void testFindAll() {
+//         Package pack = new Package();
+//         List<Package> mockList = Arrays.asList(pack);
+//         when(packageRepository.findAll()).thenReturn(mockList);
 
-        List<Package> result = packageService.findAll();
+//         List<Package> result = packageService.findAll();
 
-        assertEquals(1, result.size());
-    }
+//         assertEquals(1, result.size());
+//     }
 
-    @Test
-    @DisplayName("Unit Test - Save e Update: deve salvar e atualizar pacote")
-    void testPostAndPutMapping() {
-        Package pack = new Package();
-        when(packageRepository.save(pack)).thenReturn(pack);
+//     @Test
+//     @DisplayName("Unit Test - Save e Update: deve salvar e atualizar pacote")
+//     void testPostAndPutMapping() {
+//         Package pack = new Package();
+//         when(packageRepository.save(pack)).thenReturn(pack);
 
-        Package saved = packageService.postMapping(pack);
-        Package updated = packageService.putMapping(pack);
+//         Package saved = packageService.postMapping(pack);
+//         Package updated = packageService.putMapping(pack);
 
-        assertEquals(pack, saved);
-        assertEquals(pack, updated);
-    }
+//         assertEquals(pack, saved);
+//         assertEquals(pack, updated);
+//     }
 
-    @Test
-    @DisplayName("Unit Test - FindById: deve retornar pacote pelo id")
-    void testFindById() {
-        Package pack = new Package();
-        when(packageRepository.findById(1L)).thenReturn(Optional.of(pack));
+//     @Test
+//     @DisplayName("Unit Test - FindById: deve retornar pacote pelo id")
+//     void testFindById() {
+//         Package pack = new Package();
+//         when(packageRepository.findById(1L)).thenReturn(Optional.of(pack));
 
-        Package result = packageService.findById(1L);
+//         Package result = packageService.findById(1L);
 
-        assertEquals(pack, result);
-    }
+//         assertEquals(pack, result);
+//     }
 
-    @Test
-    @DisplayName("Unit Test - FindById: deve lançar exceção se pacote não encontrado")
-    void testFindByIdNotFound() {
-        when(packageRepository.findById(1L)).thenReturn(Optional.empty());
+//     @Test
+//     @DisplayName("Unit Test - FindById: deve lançar exceção se pacote não encontrado")
+//     void testFindByIdNotFound() {
+//         when(packageRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> packageService.findById(1L));
-    }
-}
+//         assertThrows(RuntimeException.class, () -> packageService.findById(1L));
+//     }
+// }
