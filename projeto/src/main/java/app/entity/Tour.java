@@ -29,7 +29,6 @@ public class Tour {
     public Tour() {
     }
 
-
     public Long getId() {
         return id;
     }

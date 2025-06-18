@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,13 +15,15 @@ import app.repository.PackageRepository;
 import app.entity.Package;
 
 @Service
-public class PackageService{
+public class PackageService {
 
     @Autowired
     private PackageRepository packageRepository;
 
-    public List<Package> findAll() {
-        return packageRepository.findAll();
+    public Page<Package> findAll(int numPaginaAtual) {
+        int totalPorPagina = 2; // Você pode alterar esse valor para a quantidade desejada por página
+        PageRequest pageRequest = PageRequest.of(numPaginaAtual - 1, totalPorPagina);
+        return packageRepository.findAll(pageRequest);
     }
 
     public Package findById(Long id) {
@@ -40,10 +44,9 @@ public class PackageService{
         return ResponseEntity.noContent().build();
     }
 
-
     public Package postMapping(@RequestBody Package newPackage) {
-    return packageRepository.save(newPackage);
-}
+        return packageRepository.save(newPackage);
+    }
 
     public Package putMapping(@RequestBody Package updatedPackage) {
         return packageRepository.save(updatedPackage);
