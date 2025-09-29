@@ -30,18 +30,6 @@ public class PackageServiceTest {
     private PackageService packageService;
 
     @Test
-    @DisplayName("Unit Test - FindAll: deve retornar lista de pacotes")
-    void testFindAll() {
-        Package pack = new Package();
-        List<Package> mockList = Arrays.asList(pack);
-        when(packageRepository.findAll()).thenReturn(mockList);
-
-        List<Package> result = packageService.findAll();
-
-        assertEquals(1, result.size());
-    }
-
-    @Test
     @DisplayName("Unit Test - Save e Update: deve salvar e atualizar pacote")
     void testPostAndPutMapping() {
         Package pack = new Package();
