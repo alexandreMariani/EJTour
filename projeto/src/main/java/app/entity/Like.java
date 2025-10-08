@@ -25,8 +25,8 @@ public class Like {
     private Comment comment; 
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user; 
+    @JoinColumn(name = "AppUser_id", nullable = false)
+    private AppUser AppUser; 
 
     public void setId(long id) {
     this.id = id;

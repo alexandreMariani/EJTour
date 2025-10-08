@@ -2,10 +2,10 @@ package app.service;
 
 import app.entity.Comment;
 import app.entity.Like;
-import app.entity.User;
+import app.entity.AppUser;
 import app.repository.CommentRepository;
 import app.repository.LikeRepository;
-import app.repository.UserRepository;
+import app.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,16 +21,16 @@ public class CommentService {
     private LikeRepository likeRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private AppUserRepository AppUserRepository;
 
 
     public Comment createComment(Comment comment) {
         return commentRepository.save(comment);
     }
 
-    public Like likeComment(Long userId, Long commentId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public Like likeComment(Long AppUserId, Long commentId) {
+        AppUser AppUser = AppUserRepository.findById(AppUserId)
+                .orElseThrow(() -> new RuntimeException("AppUser not found"));
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new RuntimeException("Comment not found"));
         Like like = new Like();

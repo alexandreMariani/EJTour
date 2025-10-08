@@ -11,32 +11,33 @@ import lombok.Setter;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+/**
+ * Entidade que representa um usuário da aplicação.
+ * Renomeada de 'User' para 'AppUser' para evitar a palavra reservada 'user' no
+ * PostgreSQL.
+ */
 @Entity
+@Table(name = "app_user") // Define o nome da tabela no DB como 'app_user'
 @Getter
 @Setter
 @NoArgsConstructor
 @Validated
-@JsonIgnoreProperties({"likes", "tours"}) 
-public class User implements UserDetails{
+@JsonIgnoreProperties({ "likes", "tours" }) // Ajuste conforme suas outras entidades
+public class AppUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,7 +61,9 @@ public class User implements UserDetails{
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference 
+    @JsonManagedReference
+    // Assumindo que a entidade Comment possui um campo 'user' que referencia
+    // AppUser
     private Set<Comment> comment = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -68,20 +71,55 @@ public class User implements UserDetails{
     private Role role;
 
     @ManyToMany
-    @JoinTable(
-        name = "user_tours",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "tour_id")
-    )
-    @JsonIgnoreProperties("users") 
+    @JoinTable(name = "app_user_tours", // Tabela de junção renomeada
+            joinColumns = @JoinColumn(name = "app_user_id"), // Coluna de junção renomeada
+            inverseJoinColumns = @JoinColumn(name = "tour_id"))
+    @JsonIgnoreProperties("users")
     private Set<Tour> tours = new HashSet<>();
 
+    // --- Implementação UserDetails ---
 
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Assume que a Role tem um método getName() que retorna o nome do papel (ex:
+        // ADMIN)
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.getName()));
     }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    // Métodos obrigatórios do UserDetails (configurados como 'true' por padrão para
+    // funcionar)
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    // --- Getters e Setters gerados pelo Lombok (@Getter @Setter), mas mantidos
+    // explicitamente ---
+    /*
+     * Note: Lombok é usado, mas mantive os métodos para clareza
+     * e compatibilidade com a implementação original.
+     */
 
     public Long getId() {
         return id;
@@ -146,9 +184,4 @@ public class User implements UserDetails{
     public void setTours(Set<Tour> tours) {
         this.tours = tours;
     }
-
-    @Override
-    public String getUsername() {
-    return this.email;
-}
 }

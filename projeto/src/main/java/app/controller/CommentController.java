@@ -1,11 +1,11 @@
 package app.controller;
 
+import app.entity.AppUser;
 import app.entity.Comment;
 import app.entity.Like;
-import app.entity.User;
 import app.repository.CommentRepository;
 import app.repository.LikeRepository;
-import app.repository.UserRepository;
+import app.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +26,12 @@ public class CommentController {
   private LikeRepository likeRepository;
 
   @Autowired
-  private UserRepository userRepository;
+  private AppUserRepository userRepository;
 
   @PostMapping
   public ResponseEntity<?> createComment(@RequestBody Comment comment) {
 
-    User user = new User();
+    AppUser user = new AppUser();
     user.setId(1L);
     comment.setUser(user);
     Comment savedComment = commentRepository.save(comment);
@@ -44,15 +44,13 @@ public class CommentController {
       @RequestParam Long userId,
       @PathVariable Long commentId) {
 
-    User user = userRepository.findById(userId)
+    AppUser user = userRepository.findById(userId)
         .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
     Comment comment = commentRepository.findById(commentId)
         .orElseThrow(() -> new RuntimeException("Comentário não encontrado"));
 
     Like like = new Like();
-    // like.setUser(user);
-    // like.setComment(comment);
     Like savedLike = likeRepository.save(like);
 
     return new ResponseEntity<>(savedLike, HttpStatus.CREATED);

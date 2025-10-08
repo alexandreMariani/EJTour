@@ -1,8 +1,8 @@
 package app.service;
 
-import app.entity.User;
+import app.entity.AppUser;
 import app.entity.UserAuthenticated;
-import app.repository.UserRepository;
+import app.repository.AppUserRepository;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceimpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AppUserRepository userRepository;
 
-    public UserDetailsServiceimpl(UserRepository userRepository) {
+    public UserDetailsServiceimpl(AppUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username)
+        AppUser user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o e-mail: " + username));
         return new UserAuthenticated(user);
     }

@@ -1,12 +1,7 @@
 package app.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -17,52 +12,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIgnoreProperties({"user", "likes"})
+@JsonIgnoreProperties({ "likes" })
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @NotBlank(message = "O campo nome é obrigatório.")
     private String name;
-    
+
     @NotBlank(message = "O campo depoimento é obrigatório.")
     private String text;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "app_user_id", nullable = false)
     @JsonBackReference
-    private User user;
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public long getId() {
-    return id;
-}
-
-public void setId(long id) {
-    this.id = id;
-}
-
-public String getName() {
-    return name;
-}
-
-public void setName(String name) {
-    this.name = name;
-}
-
-public String getText() {
-    return text;
-}
-
-public void setText(String text) {
-    this.text = text;
-}
-
-
+    private AppUser user;
 
 }

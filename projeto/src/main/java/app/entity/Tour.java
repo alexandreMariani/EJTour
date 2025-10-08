@@ -24,7 +24,7 @@ public class Tour {
 
     @ManyToMany(mappedBy = "tours")
     @JsonIgnoreProperties("tours")
-    private Set<User> users = new HashSet<>();
+    private Set<AppUser> AppUsers = new HashSet<>();
 
     public Tour() {
     }
@@ -53,11 +53,11 @@ public class Tour {
         this.description = description;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Set<AppUser> getAppUsers() {
+        return AppUsers;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setAppUsers(Set<AppUser> AppUsers) {
+        this.AppUsers = AppUsers;
     }
 }

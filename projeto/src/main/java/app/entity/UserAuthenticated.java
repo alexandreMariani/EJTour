@@ -8,9 +8,9 @@ import java.util.Collections;
 
 public class UserAuthenticated implements UserDetails {
 
-    private final User user;
+    private final AppUser user;
 
-    public UserAuthenticated(User user) {
+    public UserAuthenticated(AppUser user) {
         this.user = user;
     }
 
@@ -50,7 +50,7 @@ public class UserAuthenticated implements UserDetails {
         return true;
     }
 
-    public User getUser() {
+    public AppUser getUser() {
         return user;
     }
 }

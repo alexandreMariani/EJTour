@@ -33,7 +33,7 @@ public class Role {
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("role")
-    private Set<User> users;
+    private Set<AppUser> AppUsers;
 
     public Long getId() {
         return id;
@@ -51,12 +51,12 @@ public class Role {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Set<AppUser> getAppUsers() {
+        return AppUsers;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setAppUsers(Set<AppUser> AppUsers) {
+        this.AppUsers = AppUsers;
     }
 
 }

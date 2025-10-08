@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import app.service.PackageService;
@@ -35,6 +36,7 @@ public class PackageController {
         }
 
         @PostMapping
+        @PreAuthorize("hasRole('ADMIN')")
         public ResponseEntity<?> save(@RequestBody Package pack) {
                 Package savedPackage = packageService.postMapping(pack);
                 return new ResponseEntity<>(savedPackage, HttpStatus.CREATED);
@@ -42,6 +44,7 @@ public class PackageController {
         }
 
         @DeleteMapping(value = "/{id}")
+        @PreAuthorize("hasRole('ADMIN')")
         public ResponseEntity<?> delete(@PathVariable Long id) {
                 packageService.deleteMapping(id);
                 return new ResponseEntity<>("Package deleted successfully", HttpStatus.NO_CONTENT);
@@ -49,6 +52,7 @@ public class PackageController {
         }
 
         @PutMapping
+        @PreAuthorize("hasRole('ADMIN')")
         public ResponseEntity<?> edit(@RequestBody Package pack) {
                 Package updatedPackage = packageService.putMapping(pack);
                 return new ResponseEntity<>(updatedPackage, HttpStatus.OK);
