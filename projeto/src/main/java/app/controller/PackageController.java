@@ -36,7 +36,7 @@ public class PackageController {
         }
 
         @PostMapping
-        @PreAuthorize("hasRole('ADMIN')")
+        @PreAuthorize("hasRole('Role_')ADMIN")
         public ResponseEntity<?> save(@RequestBody Package pack) {
                 Package savedPackage = packageService.postMapping(pack);
                 return new ResponseEntity<>(savedPackage, HttpStatus.CREATED);

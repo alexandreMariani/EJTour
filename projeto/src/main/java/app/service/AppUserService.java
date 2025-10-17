@@ -15,9 +15,6 @@ import java.util.Optional;
 public class AppUserService {
 
     @Autowired
-    private BCryptPasswordEncoder bcryptEncoder;
-
-    @Autowired
     private AppUserRepository AppUserRepository;
 
     public List<AppUser> findAll() {
@@ -27,7 +24,7 @@ public class AppUserService {
     public AppUser findById(Long id) {
         Optional<AppUser> AppUser = AppUserRepository.findById(id);
         if (AppUser.isEmpty()) {
-            throw new RuntimeException("AppUser não encontrado!");
+            throw new RuntimeException("User não encontrado!");
         }
         return AppUser.get();
     }
@@ -40,18 +37,7 @@ public class AppUserService {
         return AppUser.get();
     }
 
-    public AppUser postMapping(AppUser AppUser) {
-        String senhaCriptografada = bcryptEncoder.encode(AppUser.getPassword());
-        AppUser.setPassword(senhaCriptografada);
-        AppUser post = AppUserRepository.save(AppUser);
-        return post;
-
-    }
-
     public String save(AppUser AppUser) {
-
-        String senhaCriptografada = bcryptEncoder.encode(AppUser.getPassword());
-        AppUser.setPassword(senhaCriptografada);
 
         AppUser post = AppUserRepository.save(AppUser);
         return "Usuario salvo com sucesso";

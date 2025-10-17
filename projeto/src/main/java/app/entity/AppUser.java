@@ -60,10 +60,12 @@ public class AppUser implements UserDetails {
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres.")
     private String password;
 
+    private String Client_id;
+
+    private String Client_secret;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    // Assumindo que a entidade Comment possui um campo 'user' que referencia
-    // AppUser
     private Set<Comment> comment = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -184,4 +186,5 @@ public class AppUser implements UserDetails {
     public void setTours(Set<Tour> tours) {
         this.tours = tours;
     }
+
 }
