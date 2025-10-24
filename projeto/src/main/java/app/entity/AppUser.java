@@ -52,6 +52,8 @@ public class AppUser implements UserDetails {
     @Column(unique = true)
     private String email;
 
+    private String username;
+
     @NotNull(message = "A data de nascimento é obrigatória.")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate birthday;
@@ -63,6 +65,8 @@ public class AppUser implements UserDetails {
     private String Client_id;
 
     private String Client_secret;
+
+    private String grant_type;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference

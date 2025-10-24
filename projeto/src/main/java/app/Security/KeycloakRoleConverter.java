@@ -28,15 +28,11 @@ public class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedA
             return new HashSet<>();
         }
 
-        // As roles estão dentro de 'realm_access' sob a chave 'roles' como uma lista
         List<String> roles = (List<String>) realmAccess.get("roles");
 
         if (roles == null) {
             return new HashSet<>();
         }
-
-        // Mapeia cada string de role para um objeto SimpleGrantedAuthority
-        // e adiciona o prefixo "ROLE_" (padrão do Spring Security)
         Set<GrantedAuthority> authorities = roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
                 .collect(Collectors.toSet());
